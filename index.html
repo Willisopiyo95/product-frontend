@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        input[type="text"],
+        button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px 0;
+            width: 100%;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Search Product by Code</h1>
+        <input type="text" id="productCode" placeholder="Enter Product Code">
+        <button onclick="searchProduct()">Search</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function searchProduct() {
+            var code = document.getElementById("productCode").value;
+
+            if (code) {
+                fetch(`http://127.0.0.1:5000/search?code=${code}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message) {
+                            document.getElementById("result").innerHTML = `<p>${data.message}</p>`;
+                        } else {
+                            var product = data[0];
+                            var resultHTML = `
+                            <p><strong>Product Code:</strong> ${product["Product's Code"]}</p>
+                            <p><strong>Type:</strong> ${product.Type}</p>
+                            <p><strong>Distributor's Price:</strong> ${product["Distributor's Price"]}</p>
+                            <p><strong>Contractor Price:</strong> ${product["Contractor Price"]}</p>
+                            <p><strong>Price Tag:</strong> ${product["Price tag"]}</p>
+                            <p><strong>Quantity in Stock:</strong> ${product["Qty in stock"]}</p>
+                        `;
+                            document.getElementById("result").innerHTML = resultHTML;
+                        }
+                    })
+                    .catch(error => {
+                        document.getElementById("result").innerHTML = "<p>Something went wrong. Please try again later.</p>";
+                    });
+            } else {
+                document.getElementById("result").innerHTML = "<p>Please enter a product code.</p>";
+            }
+        }
+    </script>
+</body>
+
+</html>
