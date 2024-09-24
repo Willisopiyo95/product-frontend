@@ -48,7 +48,7 @@
             var code = document.getElementById("productCode").value;
 
             if (code) {
-                fetch(`http://127.0.0.1:5000/search?code=${code}`)
+                fetch(`https://product-backend-1-jp2r.onrender.com/`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.message) {
