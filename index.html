@@ -44,11 +44,11 @@
     </div>
 
     <script>
-        function searchProduct() {
-            var code = document.getElementById("productCode").value;
-
+     function searchProduct() {
+            var code = document.getElementById("productCode").value;  // Use 'code' here
+        
             if (code) {
-                fetch(`https://product-backend-lh17.onrender.com/search?code=${productCode}`)
+                fetch(`https://product-backend-lh17.onrender.com/search?code=${code}`)  // Use 'code' instead of 'productCode'
                     .then(response => response.json())
                     .then(data => {
                         if (data.message) {
@@ -56,13 +56,13 @@
                         } else {
                             var product = data[0];
                             var resultHTML = `
-                            <p><strong>Product Code:</strong> ${product["Product's Code"]}</p>
-                            <p><strong>Type:</strong> ${product.Type}</p>
-                            <p><strong>Distributor's Price:</strong> ${product["Distributor's Price"]}</p>
-                            <p><strong>Contractor Price:</strong> ${product["Contractor Price"]}</p>
-                            <p><strong>Price Tag:</strong> ${product["Price tag"]}</p>
-                            <p><strong>Quantity in Stock:</strong> ${product["Qty in stock"]}</p>
-                        `;
+                                <p><strong>Product Code:</strong> ${product["Product's Code"]}</p>
+                                <p><strong>Type:</strong> ${product.Type}</p>
+                                <p><strong>Distributor's Price:</strong> ${product["Distributor's Price"]}</p>
+                                <p><strong>Contractor Price:</strong> ${product["Contractor Price"]}</p>
+                                <p><strong>Price Tag:</strong> ${product["Price tag"]}</p>
+                                <p><strong>Quantity in Stock:</strong> ${product["Qty in stock"]}</p>
+                            `;
                             document.getElementById("result").innerHTML = resultHTML;
                         }
                     })
@@ -73,6 +73,7 @@
                 document.getElementById("result").innerHTML = "<p>Please enter a product code.</p>";
             }
         }
+
     </script>
 </body>
 
